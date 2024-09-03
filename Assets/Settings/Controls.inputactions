@@ -1,0 +1,18 @@
+{
+    "name": "Controls",
+    "maps": [
+        {
+            "name": "Menu",
+            "id": "c7ffd785-0e17-4f09-ac0a-4f671446e850",
+            "actions": [],
+            "bindings": []
+        },
+        {
+            "name": "Level",
+            "id": "9b51ce41-d84a-461e-b1f1-4495ec5d9358",
+            "actions": [],
+            "bindings": []
+        }
+    ],
+    "controlSchemes": []
+}
