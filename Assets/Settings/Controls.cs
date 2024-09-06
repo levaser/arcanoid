@@ -32,8 +32,30 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             ""name"": ""Level"",
             ""id"": ""9b51ce41-d84a-461e-b1f1-4495ec5d9358"",
-            ""actions"": [],
-            ""bindings"": []
+            ""actions"": [
+                {
+                    ""name"": ""StandardInteraction"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f2c17dc-1ceb-4f2b-b895-f049017ac8d9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""93365dc9-b223-46a1-9f03-3d3ead46cad2"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StandardInteraction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -42,6 +64,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         // Level
         m_Level = asset.FindActionMap("Level", throwIfNotFound: true);
+        m_Level_StandardInteraction = m_Level.FindAction("StandardInteraction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -141,10 +164,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     // Level
     private readonly InputActionMap m_Level;
     private List<ILevelActions> m_LevelActionsCallbackInterfaces = new List<ILevelActions>();
+    private readonly InputAction m_Level_StandardInteraction;
     public struct LevelActions
     {
         private @Controls m_Wrapper;
         public LevelActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @StandardInteraction => m_Wrapper.m_Level_StandardInteraction;
         public InputActionMap Get() { return m_Wrapper.m_Level; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -154,10 +179,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_LevelActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_LevelActionsCallbackInterfaces.Add(instance);
+            @StandardInteraction.started += instance.OnStandardInteraction;
+            @StandardInteraction.performed += instance.OnStandardInteraction;
+            @StandardInteraction.canceled += instance.OnStandardInteraction;
         }
 
         private void UnregisterCallbacks(ILevelActions instance)
         {
+            @StandardInteraction.started -= instance.OnStandardInteraction;
+            @StandardInteraction.performed -= instance.OnStandardInteraction;
+            @StandardInteraction.canceled -= instance.OnStandardInteraction;
         }
 
         public void RemoveCallbacks(ILevelActions instance)
@@ -180,5 +211,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     }
     public interface ILevelActions
     {
+        void OnStandardInteraction(InputAction.CallbackContext context);
     }
 }

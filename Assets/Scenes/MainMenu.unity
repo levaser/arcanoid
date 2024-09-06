@@ -444,7 +444,7 @@ GameObject:
   - component: {fileID: 843844951}
   - component: {fileID: 843844950}
   m_Layer: 0
-  m_Name: Main Scene Installer
+  m_Name: Scene Installer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,8 +466,8 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  _startButton: {fileID: 0}
-  _finishButton: {fileID: 0}
+  _startButton: {fileID: 1223134676}
+  _finishButton: {fileID: 1784092354}
 --- !u!4 &843844951
 Transform:
   m_ObjectHideFlags: 0
@@ -483,6 +483,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1223134676 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7484509116254696413, guid: 7ac55d0899c346744b7da71a8ba65e2b,
+    type: 3}
+  m_PrefabInstance: {fileID: 567251098}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1369793672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -702,6 +714,18 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+--- !u!114 &1784092354 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1766642299693978421, guid: 49704a5e9e25c8146a376ebfb2df01f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1369793672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &945937497143405446
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ namespace Game
             builder.Register<Controls>(Lifetime.Singleton);
             builder.Register<GameStarter>(Lifetime.Singleton);
             builder.Register<ApplicationFinisher>(Lifetime.Singleton);
+            builder.Register<LevelStarter>(Lifetime.Singleton);
         }
     }
 }

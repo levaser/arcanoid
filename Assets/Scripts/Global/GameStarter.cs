@@ -6,7 +6,7 @@ namespace Game
     {
         public void Start()
         {
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("CampaignMap");
         }
     }
 }

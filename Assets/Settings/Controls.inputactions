@@ -10,8 +10,30 @@
         {
             "name": "Level",
             "id": "9b51ce41-d84a-461e-b1f1-4495ec5d9358",
-            "actions": [],
-            "bindings": []
+            "actions": [
+                {
+                    "name": "StandardInteraction",
+                    "type": "Button",
+                    "id": "1f2c17dc-1ceb-4f2b-b895-f049017ac8d9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "93365dc9-b223-46a1-9f03-3d3ead46cad2",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandardInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
