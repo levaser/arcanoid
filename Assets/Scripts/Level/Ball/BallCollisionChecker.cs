@@ -30,7 +30,7 @@ namespace Game.Levels
                 _config.Radius / 2,
                 direction,
                 0.1f,
-                LayerMask.GetMask("Default")
+                LayerMask.GetMask("Default", "Platform")
             );
 
             if (_hit.collider != null)

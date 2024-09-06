@@ -38,7 +38,8 @@ namespace Game.Levels
                 {
                     if (_levelConfig.Grid.GetCell(column, row) == 1)
                     {
-                        Object.Instantiate(_enemyPrefab, new Vector3(column, -row * 0.75f, 0) + _gridTransform.localPosition, Quaternion.identity, _gridTransform);
+                        GameObject enemy = Object.Instantiate(_enemyPrefab, new Vector3(column, -row * 0.75f, 0) + _gridTransform.localPosition, Quaternion.identity, _gridTransform);
+                        enemy.GetComponent<SpriteRenderer>().sortingOrder = row;
                     }
                 }
             }

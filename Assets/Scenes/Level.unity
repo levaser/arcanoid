@@ -2124,6 +2124,7 @@ MonoBehaviour:
   _ballConfig: {fileID: 11400000, guid: bf4078640e3e5e049bc5214185b4fbad, type: 2}
   _ballTransform: {fileID: 7227516331127412328}
   _platformTransform: {fileID: 2055102312868284740}
+  _platformConfig: {fileID: 11400000, guid: ada36ed0c8942d647b31679c6f7dd510, type: 2}
 --- !u!1 &1273290036
 GameObject:
   m_ObjectHideFlags: 0
@@ -2136,8 +2137,8 @@ GameObject:
   - component: {fileID: 1273290041}
   - component: {fileID: 1273290040}
   - component: {fileID: 1273290039}
-  - component: {fileID: 1273290042}
   - component: {fileID: 1273290043}
+  - component: {fileID: 1273290044}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -2919,18 +2920,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &1273290042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1273290036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17f55c9057d663e4e897506facbb0439, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &1273290043
 Rigidbody2D:
   serializedVersion: 4
@@ -2958,6 +2947,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &1273290044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273290036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274ee02aea8254e46b874794425dcf1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1381964261
 GameObject:
   m_ObjectHideFlags: 0
@@ -3270,7 +3271,7 @@ GameObject:
   - component: {fileID: 2055102312868284741}
   - component: {fileID: 2055102312868284743}
   - component: {fileID: 2055102312868284742}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3377,7 +3378,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.55}
+  m_Offset: {x: 0, y: 1.0230238}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -3388,7 +3389,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 11.12, y: 1.1}
+  m_Size: {x: 1.8, y: 0.15395212}
   m_EdgeRadius: 0
 --- !u!114 &2055102312868284742
 MonoBehaviour:
@@ -3410,7 +3411,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2055102312868284738}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -3425,7 +3426,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -3439,7 +3440,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2055102312880599434}
   - component: {fileID: 2055102312880599435}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3660,7 +3661,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!1 &7227516331250967444
 GameObject:

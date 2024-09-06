@@ -59,14 +59,20 @@ namespace Game.Levels
 
         private void OnCollisionDetected(RaycastHit2D hit)
         {
+            MarkerClass target = hit.transform.GetComponent<MarkerClass>();
             List<Type> typeInterfaces = new List<Type>(hit.transform.GetComponent<MarkerClass>().GetType().GetInterfaces());
-            if (typeInterfaces.Find(e => e == typeof(IDefaultReflectable)) != null)
+            if (typeInterfaces.Find(e => e == typeof(IEnemyReflectable)) != null)
             {
                 ChangeMoveDirection(Vector2.Reflect(_moveDirection, hit.normal));
+                (target as IEnemyReflectable).OnTouch();
             }
             else if (typeInterfaces.Find(e => e == typeof(ICustomRelfectable)) != null)
             {
-                ChangeMoveDirection((hit.transform.GetComponent<MarkerClass>() as Platform).GetReflectedDirection(hit));
+                ChangeMoveDirection((hit.transform.GetComponent<MarkerClass>() as ICustomRelfectable).GetReflectedDirection(hit));
+            }
+            else if (typeInterfaces.Find(e => e == typeof(IDefaultReflectable)) != null)
+            {
+                ChangeMoveDirection(Vector2.Reflect(_moveDirection, hit.normal));
             }
         }
 
