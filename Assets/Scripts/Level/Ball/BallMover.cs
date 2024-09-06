@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Rendering;
 using UnityEngine;
 using VContainer;
@@ -53,25 +55,27 @@ namespace Game.Levels
         void IFixedTickable.FixedTick()
         {
             _collisionChecker.CheckCollisionsInDirection(_moveDirection);
-            // Move();
         }
 
         private void OnCollisionDetected(RaycastHit2D hit)
         {
-            if (hit.transform.GetComponent<MarkerClass>()
-                .GetType().GetInterface(typeof(IDefaultReflectable).ToString()) != null)
+            List<Type> typeInterfaces = new List<Type>(hit.transform.GetComponent<MarkerClass>().GetType().GetInterfaces());
+            if (typeInterfaces.Find(e => e == typeof(IDefaultReflectable)) != null)
             {
-                _moveDirection = Vector2.Reflect(_moveDirection, hit.normal);
-                _speed = Mathf.Clamp(_speed + 0.05f, 0f, _config.MaxSpeed);
-
-                _rigibody.velocity = _moveDirection * _speed;
+                ChangeMoveDirection(Vector2.Reflect(_moveDirection, hit.normal));
+            }
+            else if (typeInterfaces.Find(e => e == typeof(ICustomRelfectable)) != null)
+            {
+                ChangeMoveDirection((hit.transform.GetComponent<MarkerClass>() as Platform).GetReflectedDirection(hit));
             }
         }
 
-        // private void Move()
-        // {
-        //     // _transform.Translate((Vector3)_moveDirection * _speed * Time.fixedDeltaTime);
-        //     _rigibody.velocity = _moveDirection * _speed;
-        // }
+        private void ChangeMoveDirection(Vector2 newDirection)
+        {
+            _moveDirection = newDirection;
+            _speed = Mathf.Clamp(_speed + 0.05f, 0f, _config.MaxSpeed);
+
+            _rigibody.velocity = _moveDirection * _speed;
+        }
     }
 }

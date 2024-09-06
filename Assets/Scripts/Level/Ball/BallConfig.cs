@@ -6,7 +6,7 @@ namespace Game.Levels
     public sealed class BallConfig : ScriptableObject
     {
         [field: SerializeField]
-        public float Speed { get; private set; } = 1f;
+        public float Speed { get; private set; } = 3f;
 
         [field: SerializeField]
         public float MaxSpeed { get; private set; } = 8f;
