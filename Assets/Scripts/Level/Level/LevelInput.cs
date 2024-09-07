@@ -8,22 +8,19 @@ namespace Game.Levels
 {
     public sealed class LevelInput : IStartable, IDisposable
     {
+        public event Action LevelStartPerformed;
+        public event Action<float> PlatformMovePerformed;
+
         private const float MouseInputMultiplier = 0.05f;
 
         private readonly Controls _controls;
-        private readonly BallMover _ball;
-        private readonly PlatformMover _platform;
 
         [Inject]
         public LevelInput(
-            Controls controls,
-            BallMover ball,
-            PlatformMover platform
+            Controls controls
         )
         {
             _controls = controls;
-            _ball = ball;
-            _platform = platform;
         }
 
         void IStartable.Start()
@@ -42,8 +39,8 @@ namespace Game.Levels
             _controls.Level.Move.performed -= OnMove;
         }
 
-        private void OnStandardInteraction(InputAction.CallbackContext context) => _ball.StartMoving();
+        private void OnStandardInteraction(InputAction.CallbackContext context) => LevelStartPerformed?.Invoke();
 
-        private void OnMove(InputAction.CallbackContext context) => _platform.Move(context.ReadValue<Vector2>().x * MouseInputMultiplier);
+        private void OnMove(InputAction.CallbackContext context) => PlatformMovePerformed?.Invoke(context.ReadValue<Vector2>().x * MouseInputMultiplier);
     }
 }

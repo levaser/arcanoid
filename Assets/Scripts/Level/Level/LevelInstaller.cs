@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -30,25 +31,33 @@ namespace Game.Levels
                 .WithParameter(_enemyGridTransform)
                 .WithParameter(_enemyPrefab);
 
-            ConfigureBall(builder);
-            ConfigurePlatform(builder);
+            builder.RegisterEntryPoint<LevelInput>(Lifetime.Scoped).AsSelf();
 
-            builder.RegisterEntryPoint<LevelInput>(Lifetime.Scoped);
+            ConfigurePlatform(builder);
+            ConfigureBall(builder);
         }
 
         private void ConfigureBall(IContainerBuilder builder)
         {
-            builder.RegisterEntryPoint<BallMover>(Lifetime.Scoped)
+            builder.Register<BallState, OnPlatformState>(Lifetime.Scoped)
+                .WithParameter("ballTransform", _ballTransform)
+                .WithParameter("platformTransform", _platformTransform);
+            builder.Register<BallState, AttackState>(Lifetime.Scoped)
                 .WithParameter(_ballTransform)
-                .WithParameter(_ballConfig)
-                .AsSelf();
+                .WithParameter(_ballConfig);
+
+            builder.RegisterEntryPoint<BallStateMachine>(Lifetime.Scoped)
+                .As<Utility.StateSystem.IStateMachine, BallStateMachine>();
+
+            builder.Register(container => new Lazy<Utility.StateSystem.IStateMachine>(() => container.Resolve<Utility.StateSystem.IStateMachine>()), Lifetime.Scoped);
         }
 
         private void ConfigurePlatform(IContainerBuilder builder)
         {
-            builder.Register<PlatformMover>(Lifetime.Scoped)
+            builder.RegisterEntryPoint<PlatformMover>(Lifetime.Scoped)
                 .WithParameter(_platformTransform)
-                .WithParameter(_platformConfig);
+                .WithParameter(_platformConfig)
+                .AsSelf();
         }
     }
 }

@@ -1,37 +1,49 @@
+using System;
 using UnityEngine;
 using VContainer;
+using VContainer.Unity;
 
 namespace Game.Levels
 {
-    public sealed class PlatformMover
+    public sealed class PlatformMover : IStartable, IDisposable
     {
+        public event Action<float> PlatformMoved;
+
         private readonly Transform _transform;
-        private readonly Rigidbody2D _rigidbody;
-        private readonly BoxCollider2D _collider;
         private readonly PlatformConfig _config;
+        private readonly LevelInput _input;
 
         [Inject]
         public PlatformMover(
             Transform transform,
-            PlatformConfig config
+            PlatformConfig config,
+            LevelInput input
         )
         {
             _transform = transform;
-            _rigidbody = transform.GetComponent<Rigidbody2D>();
-            _collider = transform.GetComponent<BoxCollider2D>();
             _config = config;
+            _input = input;
         }
 
-        public void Move(float input)
+        void IStartable.Start()
         {
-            // if (Physics2D.Raycast(_transform.position, Vector2.right * Mathf.Sign(input), _collider.size.x / 2 + 0.1f, LayerMask.GetMask("Default")).collider == null)
-            // if (_config.LeftMoveLimit < _transform.localPosition.x && _transform.localPosition.x < _config.RightMoveLimit)
-            //     _transform.localPosition += input * _config.Speed * (Vector3)Vector2.right;
+            _input.PlatformMovePerformed += OnPlatformMovePreformed;
+        }
+
+        void IDisposable.Dispose()
+        {
+            _input.PlatformMovePerformed -= OnPlatformMovePreformed;
+        }
+
+        public void OnPlatformMovePreformed(float input)
+        {
             _transform.localPosition = new Vector3(
                 Mathf.Clamp(_transform.localPosition.x + input * _config.Speed, _config.LeftMoveLimit, _config.RightMoveLimit),
                 _transform.localPosition.y,
                 _transform.localPosition.z
             );
+
+            PlatformMoved?.Invoke(Mathf.Clamp(_transform.localPosition.x + input * _config.Speed, _config.LeftMoveLimit, _config.RightMoveLimit));
         }
     }
 }
