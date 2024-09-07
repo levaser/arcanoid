@@ -1,0 +1,60 @@
+{
+    "name": "Controls",
+    "maps": [
+        {
+            "name": "Menu",
+            "id": "c7ffd785-0e17-4f09-ac0a-4f671446e850",
+            "actions": [],
+            "bindings": []
+        },
+        {
+            "name": "Level",
+            "id": "9b51ce41-d84a-461e-b1f1-4495ec5d9358",
+            "actions": [
+                {
+                    "name": "StandardInteraction",
+                    "type": "Button",
+                    "id": "1f2c17dc-1ceb-4f2b-b895-f049017ac8d9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Move",
+                    "type": "PassThrough",
+                    "id": "a6f26d5f-6322-49d6-b6bb-4b992432264e",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "93365dc9-b223-46a1-9f03-3d3ead46cad2",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandardInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d737ce58-8e00-49fe-bd85-b45b4d941c74",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
