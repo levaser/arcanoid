@@ -27,9 +27,11 @@ namespace Game.Levels
 
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.Register<LevelStats>(Lifetime.Scoped);
             builder.RegisterEntryPoint<LevelLoader>(Lifetime.Scoped)
                 .WithParameter(_enemyGridTransform)
                 .WithParameter(_enemyPrefab);
+            builder.RegisterEntryPoint<LevelFinisher>(Lifetime.Scoped);
 
             builder.RegisterEntryPoint<LevelInput>(Lifetime.Scoped).AsSelf();
 

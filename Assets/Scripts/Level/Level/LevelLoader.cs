@@ -9,12 +9,14 @@ namespace Game.Levels
         private readonly LevelConfig _levelConfig;
         private readonly Transform _gridTransform;
         private readonly GameObject _enemyPrefab;
+        private readonly LevelStats _levelStats;
 
         [Inject]
         public LevelLoader(
             LevelStarter levelStarter,
             Transform gridTransform,
-            GameObject enemyPrefab
+            GameObject enemyPrefab,
+            LevelStats levelStats
         )
         {
             if (levelStarter == null)
@@ -28,6 +30,8 @@ namespace Game.Levels
 
             _enemyPrefab = enemyPrefab
                 ?? throw new System.ArgumentNullException(nameof(enemyPrefab), "Parameter 'enemyPrefab' cannot be null");
+
+            _levelStats = levelStats;
         }
 
         void IStartable.Start()
@@ -40,6 +44,7 @@ namespace Game.Levels
                     {
                         GameObject enemy = Object.Instantiate(_enemyPrefab, new Vector3(column, -row * 0.75f, 0) + _gridTransform.localPosition, Quaternion.identity, _gridTransform);
                         enemy.GetComponent<SpriteRenderer>().sortingOrder = row;
+                        _levelStats.EnemiesNumber++;
                     }
                 }
             }

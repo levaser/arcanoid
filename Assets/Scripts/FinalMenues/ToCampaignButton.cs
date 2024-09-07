@@ -3,15 +3,15 @@ using UnityEngine.UI;
 using VContainer;
 using VContainer.Unity;
 
-namespace Game.MainMenu
+namespace Game.FinalMenues
 {
-    public sealed class StartGameButton : IStartable, IDisposable
+    public sealed class ToCampaignButton : IStartable, IDisposable
     {
         private readonly Button _button;
         private readonly GameStarter _gameStarter;
 
         [Inject]
-        public StartGameButton(
+        public ToCampaignButton(
             Button button,
             GameStarter gameStarter
         )

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Utility.StateSystem;
 using VContainer;
 
@@ -11,6 +12,7 @@ namespace Game.Levels
         private readonly BallConfig _config;
         private readonly BallCollisionChecker _collisionChecker;
         private readonly Rigidbody2D _rigidbody;
+        private readonly LevelStats _levelStats;
 
         private Vector2 _moveDirection;
         private float _speed;
@@ -20,12 +22,14 @@ namespace Game.Levels
             Lazy<IStateMachine> stateMachine,
             LevelInput input,
             Transform ballTransform,
-            BallConfig config
+            BallConfig config,
+            LevelStats levelStats
         ) : base(stateMachine, input, ballTransform)
         {
             _config = config;
             _collisionChecker = new BallCollisionChecker(BallTransform, _config);
             _rigidbody = BallTransform.GetComponent<Rigidbody2D>();
+            _levelStats = levelStats;
         }
 
         protected override void OnEnter()
@@ -55,6 +59,7 @@ namespace Game.Levels
             {
                 ChangeMoveDirection(Vector2.Reflect(_moveDirection, hit.normal));
                 (target as IEnemyReflectable).OnTouch();
+                _levelStats.EnemiesNumber--;
             }
             else if (typeInterfaces.Find(e => e == typeof(ICustomRelfectable)) != null)
             {
@@ -63,6 +68,10 @@ namespace Game.Levels
             else if (typeInterfaces.Find(e => e == typeof(IDefaultReflectable)) != null)
             {
                 ChangeMoveDirection(Vector2.Reflect(_moveDirection, hit.normal));
+            }
+            else if (typeInterfaces.Find(e => e == typeof(IDeadReflectable)) != null)
+            {
+                _levelStats.HP--;
             }
         }
 

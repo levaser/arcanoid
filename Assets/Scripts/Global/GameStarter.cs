@@ -4,7 +4,7 @@ namespace Game
 {
     public sealed class GameStarter
     {
-        public void Start()
+        public void LoadCampaignMap()
         {
             SceneManager.LoadScene("CampaignMap");
         }

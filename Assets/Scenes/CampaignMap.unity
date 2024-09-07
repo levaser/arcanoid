@@ -246,7 +246,7 @@ MonoBehaviour:
     <LevelConfig>k__BackingField: {fileID: 11400000, guid: b2aa566b488feb447a794a2965f60090,
       type: 2}
   - <Button>k__BackingField: {fileID: 1276632940}
-    <LevelConfig>k__BackingField: {fileID: 11400000, guid: b2aa566b488feb447a794a2965f60090,
+    <LevelConfig>k__BackingField: {fileID: 11400000, guid: 0aefd31b8dadd294d92b34136222edc8,
       type: 2}
 --- !u!1 &280177388
 GameObject:
