@@ -48,6 +48,9 @@ namespace Game.Levels
                     }
                 }
             }
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3925384236396933268}
   - component: {fileID: 2223108523041083124}
+  - component: {fileID: -5322521913199710369}
   m_Layer: 0
   m_Name: Project Installer
   m_TagString: Untagged
@@ -48,3 +49,16 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  _applicationFinisher: {fileID: -5322521913199710369}
+--- !u!114 &-5322521913199710369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5323770427992188063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cb670ec327490244ac5ac8c28a37a2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

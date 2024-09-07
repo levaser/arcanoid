@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
 
@@ -29,12 +30,20 @@ namespace Game.Levels
 
         public void OnWon()
         {
+            ShowCursor();
             SceneManager.LoadScene("WinMenu");
         }
 
         public void OnLost()
         {
+            ShowCursor();
             SceneManager.LoadScene("LoseMenu");
+        }
+
+        private void ShowCursor()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 }

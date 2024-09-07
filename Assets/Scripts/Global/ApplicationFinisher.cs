@@ -1,8 +1,9 @@
 using UnityEditor;
+using UnityEngine;
 
 namespace Game
 {
-    public sealed class ApplicationFinisher
+    public sealed class ApplicationFinisher : MonoBehaviour
     {
         public void Finish()
         {
