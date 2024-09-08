@@ -7,6 +7,6 @@ namespace Game.Levels
     public sealed class LevelConfig : ScriptableObject
     {
         [field: SerializeField]
-        public Array2DInt Grid { get; private set; }
+        public Array2DBool Grid { get; private set; }
     }
 }

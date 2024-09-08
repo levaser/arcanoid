@@ -40,7 +40,7 @@ namespace Game.Levels
             {
                 for (int column = 0; column < _levelConfig.Grid.GridSize.x; column++)
                 {
-                    if (_levelConfig.Grid.GetCell(column, row) == 1)
+                    if (_levelConfig.Grid.GetCell(column, row) == true)
                     {
                         GameObject enemy = Object.Instantiate(_enemyPrefab, new Vector3(column, -row * 0.75f, 0) + _gridTransform.localPosition, Quaternion.identity, _gridTransform);
                         enemy.GetComponent<SpriteRenderer>().sortingOrder = row;
