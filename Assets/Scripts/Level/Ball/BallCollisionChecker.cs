@@ -23,13 +23,13 @@ namespace Game.Levels
             _config = config;
         }
 
-        public void CheckCollisionsInDirection(Vector2 direction)
+        public void CheckCollisionsInDirection(Vector2 velocity)
         {
             _hit = Physics2D.CircleCast(
                 _transform.position + new Vector3(0f, _config.Radius / 2, 0f),
                 _config.Radius / 2,
-                direction,
-                0.1f,
+                velocity,
+                velocity.magnitude * Time.fixedDeltaTime,
                 LayerMask.GetMask("Default", "Platform")
             );
 

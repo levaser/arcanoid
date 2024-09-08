@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utility.StateSystem;
@@ -48,28 +49,27 @@ namespace Game.Levels
 
         public override void Update()
         {
-            _collisionChecker.CheckCollisionsInDirection(_moveDirection);
+            _collisionChecker.CheckCollisionsInDirection(_moveDirection * _speed);
         }
 
         private void OnCollisionDetected(RaycastHit2D hit)
         {
             MarkerClass target = hit.transform.GetComponent<MarkerClass>();
-            List<Type> typeInterfaces = new List<Type>(hit.transform.GetComponent<MarkerClass>().GetType().GetInterfaces());
-            if (typeInterfaces.Find(e => e == typeof(IEnemyReflectable)) != null)
+            if (target is IEnemyReflectable enemy)
             {
                 ChangeMoveDirection(Vector2.Reflect(_moveDirection, hit.normal));
-                (target as IEnemyReflectable).OnTouch();
+                enemy.OnTouch();
                 _levelStats.EnemiesNumber--;
             }
-            else if (typeInterfaces.Find(e => e == typeof(ICustomRelfectable)) != null)
+            else if (target is ICustomRelfectable platform)
             {
-                ChangeMoveDirection((hit.transform.GetComponent<MarkerClass>() as ICustomRelfectable).GetReflectedDirection(hit));
+                ChangeMoveDirection(platform.GetReflectedDirection(hit));
             }
-            else if (typeInterfaces.Find(e => e == typeof(IDefaultReflectable)) != null)
+            else if (target is IDefaultReflectable)
             {
                 ChangeMoveDirection(Vector2.Reflect(_moveDirection, hit.normal));
             }
-            else if (typeInterfaces.Find(e => e == typeof(IDeadReflectable)) != null)
+            else if (target is IDeadReflectable)
             {
                 _levelStats.HP--;
             }
