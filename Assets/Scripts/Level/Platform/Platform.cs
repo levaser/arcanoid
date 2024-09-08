@@ -3,7 +3,7 @@ using Utility;
 
 namespace Game.Levels
 {
-    public sealed class Platform : MarkerClass, ICustomRelfectable
+    public sealed class Platform : MarkerClass, IReflectable
     {
         private const int maxAngle = 70;
 
@@ -14,7 +14,9 @@ namespace Game.Levels
             _collider = transform.GetComponent<BoxCollider2D>();
         }
 
-        public Vector2 GetReflectedDirection(RaycastHit2D hit)
+        public void OnContactPerformed(LevelStats levelStats) {}
+
+        public Vector2 GetReflectedDirection(Vector2 direction, RaycastHit2D hit)
         {
             return Vector2.up.Rotate(-CalculateHitAngle(hit.point.x));
         }

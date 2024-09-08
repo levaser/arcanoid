@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Utility.StateSystem;
 using VContainer;
 
@@ -40,11 +37,13 @@ namespace Game.Levels
             _rigidbody.velocity = _moveDirection * _speed;
 
             _collisionChecker.CollisionDetected += OnCollisionDetected;
+            _levelStats.HPChanged += OnHPChanged;
         }
 
         protected override void OnExit()
         {
             _collisionChecker.CollisionDetected -= OnCollisionDetected;
+            _levelStats.HPChanged -= OnHPChanged;
         }
 
         public override void Update()
@@ -55,23 +54,10 @@ namespace Game.Levels
         private void OnCollisionDetected(RaycastHit2D hit)
         {
             MarkerClass target = hit.transform.GetComponent<MarkerClass>();
-            if (target is IEnemyReflectable enemy)
+            if (target is IReflectable reflectable)
             {
-                ChangeMoveDirection(Vector2.Reflect(_moveDirection, hit.normal));
-                enemy.OnTouch();
-                _levelStats.EnemiesNumber--;
-            }
-            else if (target is ICustomRelfectable platform)
-            {
-                ChangeMoveDirection(platform.GetReflectedDirection(hit));
-            }
-            else if (target is IDefaultReflectable)
-            {
-                ChangeMoveDirection(Vector2.Reflect(_moveDirection, hit.normal));
-            }
-            else if (target is IDeadReflectable)
-            {
-                _levelStats.HP--;
+                ChangeMoveDirection(reflectable.GetReflectedDirection(_moveDirection, hit));
+                reflectable.OnContactPerformed(_levelStats);
             }
         }
 
@@ -81,6 +67,11 @@ namespace Game.Levels
             _speed = Mathf.Clamp(_speed + 0.05f, 0f, _config.MaxSpeed);
 
             _rigidbody.velocity = _moveDirection * _speed;
+        }
+
+        private void OnHPChanged(int newHP)
+        {
+            StateMachine.SetState<OnPlatformState>();
         }
     }
 }

@@ -16,12 +16,14 @@ namespace Game.Levels
             set
             {
                 _hp = value;
+                HPChanged?.Invoke(_hp);
                 if (_hp <= 0)
                 {
                     Lost?.Invoke();
                 }
             }
         }
+        public event Action<int> HPChanged;
 
         private int _enemiesNumber = 0;
         public int EnemiesNumber
