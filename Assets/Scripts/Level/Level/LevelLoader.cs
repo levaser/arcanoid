@@ -22,8 +22,8 @@ namespace Game.Levels
             if (levelStarter == null)
                 throw new System.ArgumentNullException(nameof(LevelStarter), "Parameter 'levelStarter' cannot be null");
 
-            _levelConfig = levelStarter.LevelConfig
-                ?? throw new System.ArgumentNullException(nameof(levelStarter.LevelConfig), "Parameter 'levelConfig' cannot be null");
+            _levelConfig = levelStarter.CurrentLevelConfig
+                ?? throw new System.ArgumentNullException(nameof(levelStarter.CurrentLevelConfig), "Parameter 'levelConfig' cannot be null");
 
             _gridTransform = gridTransform
                 ?? throw new System.ArgumentNullException(nameof(gridTransform), "Parameter 'gridTransform' cannot be null");

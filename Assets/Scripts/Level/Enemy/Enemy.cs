@@ -11,7 +11,7 @@ namespace Game.Levels
 
         public void OnContactPerformed(LevelStats levelStats)
         {
-            levelStats.Score += 500;
+            levelStats.Score += 100;
             levelStats.EnemiesNumber--;
             Destroy(transform.gameObject);
         }

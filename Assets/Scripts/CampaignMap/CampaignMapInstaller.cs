@@ -12,18 +12,18 @@ namespace Game.CampaignMap
         private Button _backButton;
 
         [SerializeField]
-        private ButtonToConfigPair[] _buttonToConfigPairs;
+        private Button[] _levelStartButtons;
 
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<BackButton>(Lifetime.Scoped)
                 .WithParameter(_backButton);
 
-            foreach (var e in _buttonToConfigPairs)
+            for (int i = 0; i < _levelStartButtons.Length; i++)
             {
                 builder.RegisterEntryPoint<LevelStartButton>(Lifetime.Scoped)
-                    .WithParameter(e.Button)
-                    .WithParameter(e.LevelConfig);
+                    .WithParameter(_levelStartButtons[i])
+                    .WithParameter(i);
             }
         }
     }

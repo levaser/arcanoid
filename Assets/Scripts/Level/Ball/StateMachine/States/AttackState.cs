@@ -37,13 +37,13 @@ namespace Game.Levels
             _rigidbody.velocity = _moveDirection * _speed;
 
             _collisionChecker.CollisionDetected += OnCollisionDetected;
-            _levelStats.HPChanged += OnHPChanged;
+            _levelStats.HPDecreased += OnHPDecreased;
         }
 
         protected override void OnExit()
         {
             _collisionChecker.CollisionDetected -= OnCollisionDetected;
-            _levelStats.HPChanged -= OnHPChanged;
+            _levelStats.HPDecreased -= OnHPDecreased;
         }
 
         public override void Update()
@@ -69,7 +69,7 @@ namespace Game.Levels
             _rigidbody.velocity = _moveDirection * _speed;
         }
 
-        private void OnHPChanged(int newHP)
+        private void OnHPDecreased()
         {
             StateMachine.SetState<OnPlatformState>();
         }

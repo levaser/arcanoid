@@ -6,11 +6,26 @@ namespace Game
 {
     public sealed class LevelStarter
     {
-        public LevelConfig LevelConfig { get; private set; }
+        private readonly LevelConfig[] _levels;
 
-        public void Start(LevelConfig levelConfig)
+        public int CurrentLevelNumber { get; private set; }
+        public LevelConfig CurrentLevelConfig { get; private set; }
+
+        public LevelStarter(
+            LevelConfig[] levels
+        )
         {
-            LevelConfig = levelConfig;
+            _levels = levels;
+        }
+
+        public void Start(int levelNumber)
+        {
+            if (_levels.Length <= levelNumber)
+                throw new ArgumentOutOfRangeException(nameof(levelNumber), "Parameter 'levelNumber' out of range of '_levels'");
+
+            CurrentLevelNumber = levelNumber;
+            CurrentLevelConfig = _levels[levelNumber];
+
             SceneManager.LoadScene("Level");
         }
     }

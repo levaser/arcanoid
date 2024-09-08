@@ -9,19 +9,19 @@ namespace Game.CampaignMap
     public sealed class LevelStartButton : IStartable, IDisposable
     {
         private readonly Button _button;
-        private readonly LevelConfig _levelConfig;
+        private readonly int _targetLevelNumber;
         private readonly LevelStarter _levelStarter;
 
         [Inject]
         public LevelStartButton(
             Button button,
-            LevelConfig levelConfig,
+            int targetLevelNumber,
             LevelStarter levelStarter
         )
         {
             _button = button;
-            _levelConfig = levelConfig ?? throw new ArgumentNullException("level config is null");
-            _levelStarter = levelStarter ?? throw new ArgumentNullException("level starter is null");
+            _targetLevelNumber = targetLevelNumber;
+            _levelStarter = levelStarter;
         }
 
         void IStartable.Start()
@@ -36,7 +36,7 @@ namespace Game.CampaignMap
 
         private void OnButtonClicked()
         {
-            _levelStarter.Start(_levelConfig);
+            _levelStarter.Start(_targetLevelNumber);
         }
     }
 }

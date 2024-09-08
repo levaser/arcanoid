@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -7,11 +8,15 @@ namespace Game.Levels
 {
     public sealed class LevelInstaller : LifetimeScope
     {
+        [Header("Enemy")]
+
         [SerializeField]
         private Transform _enemyGridTransform;
 
         [SerializeField]
         private GameObject _enemyPrefab;
+
+        [Header("Ball")]
 
         [SerializeField]
         private BallConfig _ballConfig;
@@ -19,11 +24,26 @@ namespace Game.Levels
         [SerializeField]
         private Transform _ballTransform;
 
-        [SerializeField]
-        private Transform _platformTransform;
+        [Header("Platform")]
 
         [SerializeField]
         private PlatformConfig _platformConfig;
+
+        [SerializeField]
+        private Transform _platformTransform;
+
+        [Header("HP View")]
+
+        [SerializeField]
+        private Transform _hpRootTransform;
+
+        [SerializeField]
+        private GameObject _hpPrefab;
+
+        [Header("Score View")]
+
+        [SerializeField]
+        private TMP_Text _scoreText;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -37,6 +57,9 @@ namespace Game.Levels
 
             ConfigurePlatform(builder);
             ConfigureBall(builder);
+
+            ConfigureHPView(builder);
+            ConfigureScoreView(builder);
         }
 
         private void ConfigureBall(IContainerBuilder builder)
@@ -60,6 +83,19 @@ namespace Game.Levels
                 .WithParameter(_platformTransform)
                 .WithParameter(_platformConfig)
                 .AsSelf();
+        }
+
+        private void ConfigureHPView(IContainerBuilder builder)
+        {
+            builder.RegisterEntryPoint<HPView>(Lifetime.Scoped)
+                .WithParameter(_hpRootTransform)
+                .WithParameter(_hpPrefab);
+        }
+
+        private void ConfigureScoreView(IContainerBuilder builder)
+        {
+            builder.RegisterEntryPoint<ScoreView>(Lifetime.Scoped)
+                .WithParameter(_scoreText);
         }
     }
 }

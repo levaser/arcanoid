@@ -242,37 +242,17 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _backButton: {fileID: 1601792384}
-  _buttonToConfigPairs:
-  - <Button>k__BackingField: {fileID: 1295364894}
-    <LevelConfig>k__BackingField: {fileID: 11400000, guid: b2aa566b488feb447a794a2965f60090,
-      type: 2}
-  - <Button>k__BackingField: {fileID: 292384225}
-    <LevelConfig>k__BackingField: {fileID: 11400000, guid: 506b29b0f7bd6e24f8300d457aa8e43a,
-      type: 2}
-  - <Button>k__BackingField: {fileID: 696347557}
-    <LevelConfig>k__BackingField: {fileID: 11400000, guid: f9f376b4342dd214fa4cc9a94353cd38,
-      type: 2}
-  - <Button>k__BackingField: {fileID: 506114146}
-    <LevelConfig>k__BackingField: {fileID: 11400000, guid: cd97b65cf37d59740824d945e2018276,
-      type: 2}
-  - <Button>k__BackingField: {fileID: 145518628}
-    <LevelConfig>k__BackingField: {fileID: 11400000, guid: ab7dde2362a49aa4890218a3e0e9c9e9,
-      type: 2}
-  - <Button>k__BackingField: {fileID: 2083037069}
-    <LevelConfig>k__BackingField: {fileID: 11400000, guid: b88c4c22b71d77a459a3259a8f7c3da1,
-      type: 2}
-  - <Button>k__BackingField: {fileID: 1639634116}
-    <LevelConfig>k__BackingField: {fileID: 11400000, guid: 80f459446b979bd41884ec87d4594bc1,
-      type: 2}
-  - <Button>k__BackingField: {fileID: 1973186968}
-    <LevelConfig>k__BackingField: {fileID: 11400000, guid: 2d5fcd7d8521cc243b7ed54a69460acb,
-      type: 2}
-  - <Button>k__BackingField: {fileID: 1609920702}
-    <LevelConfig>k__BackingField: {fileID: 11400000, guid: ac0ccd5a37594c14f845b76e91cd25a1,
-      type: 2}
-  - <Button>k__BackingField: {fileID: 1313503416}
-    <LevelConfig>k__BackingField: {fileID: 11400000, guid: c33f2069b292d424cb2aabfade43ca53,
-      type: 2}
+  _levelStartButtons:
+  - {fileID: 1295364894}
+  - {fileID: 292384225}
+  - {fileID: 696347557}
+  - {fileID: 506114146}
+  - {fileID: 145518628}
+  - {fileID: 2083037069}
+  - {fileID: 1639634116}
+  - {fileID: 1973186968}
+  - {fileID: 1609920702}
+  - {fileID: 1313503416}
 --- !u!1 &145518626
 GameObject:
   m_ObjectHideFlags: 0
