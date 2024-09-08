@@ -38,12 +38,16 @@ namespace Game.Levels
 
             _collisionChecker.CollisionDetected += OnCollisionDetected;
             _levelStats.HPDecreased += OnHPDecreased;
+            _levelStats.Win += OnFinish;
+            _levelStats.Win += OnFinish;
         }
 
         protected override void OnExit()
         {
             _collisionChecker.CollisionDetected -= OnCollisionDetected;
             _levelStats.HPDecreased -= OnHPDecreased;
+            _levelStats.Win -= OnFinish;
+            _levelStats.Win -= OnFinish;
         }
 
         public override void Update()
@@ -70,6 +74,11 @@ namespace Game.Levels
         }
 
         private void OnHPDecreased()
+        {
+            StateMachine.SetState<OnPlatformState>();
+        }
+
+        private void OnFinish()
         {
             StateMachine.SetState<OnPlatformState>();
         }

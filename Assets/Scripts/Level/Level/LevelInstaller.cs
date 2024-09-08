@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using VContainer;
 using VContainer.Unity;
 
@@ -9,41 +10,35 @@ namespace Game.Levels
     public sealed class LevelInstaller : LifetimeScope
     {
         [Header("Enemy")]
+        [SerializeField] private Transform _enemyGridTransform;
+        [SerializeField] private GameObject _enemyPrefab;
 
-        [SerializeField]
-        private Transform _enemyGridTransform;
-
-        [SerializeField]
-        private GameObject _enemyPrefab;
 
         [Header("Ball")]
+        [SerializeField] private BallConfig _ballConfig;
+        [SerializeField] private Transform _ballTransform;
 
-        [SerializeField]
-        private BallConfig _ballConfig;
-
-        [SerializeField]
-        private Transform _ballTransform;
 
         [Header("Platform")]
+        [SerializeField] private PlatformConfig _platformConfig;
+        [SerializeField] private Transform _platformTransform;
 
-        [SerializeField]
-        private PlatformConfig _platformConfig;
-
-        [SerializeField]
-        private Transform _platformTransform;
 
         [Header("HP View")]
+        [SerializeField] private Transform _hpRootTransform;
+        [SerializeField] private GameObject _hpPrefab;
 
-        [SerializeField]
-        private Transform _hpRootTransform;
-
-        [SerializeField]
-        private GameObject _hpPrefab;
 
         [Header("Score View")]
+        [SerializeField] private TMP_Text _scoreText;
 
-        [SerializeField]
-        private TMP_Text _scoreText;
+
+        [Header("Pages")]
+        [SerializeField] private GameObject _winPage;
+        [SerializeField] private GameObject _losePage;
+        [SerializeField] private Button[] _toCampaignButtons;
+        [SerializeField] private Button _nextLevelButton;
+        [SerializeField] private Button _restartLevelButton;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -51,7 +46,7 @@ namespace Game.Levels
             builder.RegisterEntryPoint<LevelLoader>(Lifetime.Scoped)
                 .WithParameter(_enemyGridTransform)
                 .WithParameter(_enemyPrefab);
-            builder.RegisterEntryPoint<LevelFinisher>(Lifetime.Scoped);
+            // builder.RegisterEntryPoint<LevelFinisher>(Lifetime.Scoped);
 
             builder.RegisterEntryPoint<LevelInput>(Lifetime.Scoped).AsSelf();
 
@@ -60,6 +55,8 @@ namespace Game.Levels
 
             ConfigureHPView(builder);
             ConfigureScoreView(builder);
+
+            ConfigurePages(builder);
         }
 
         private void ConfigureBall(IContainerBuilder builder)
@@ -96,6 +93,23 @@ namespace Game.Levels
         {
             builder.RegisterEntryPoint<ScoreView>(Lifetime.Scoped)
                 .WithParameter(_scoreText);
+        }
+
+        private void ConfigurePages(IContainerBuilder builder)
+        {
+            builder.RegisterEntryPoint<PageSwitcher>(Lifetime.Scoped)
+                .WithParameter("winPage", _winPage)
+                .WithParameter("losePage", _losePage);
+
+            foreach (var e in _toCampaignButtons)
+                builder.RegisterEntryPoint<ToCampaignButton>(Lifetime.Scoped)
+                    .WithParameter(e);
+
+            builder.RegisterEntryPoint<NextLevelButton>(Lifetime.Scoped)
+                .WithParameter(_nextLevelButton);
+
+            builder.RegisterEntryPoint<RestartLevelButton>(Lifetime.Scoped)
+                .WithParameter(_restartLevelButton);
         }
     }
 }

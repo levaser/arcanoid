@@ -29,7 +29,7 @@ namespace Game.Levels
                 _transform.position + new Vector3(0f, _config.Radius / 2, 0f),
                 _config.Radius / 2,
                 velocity,
-                velocity.magnitude * Time.fixedDeltaTime,
+                velocity.magnitude * Time.fixedDeltaTime + 0.01f,
                 LayerMask.GetMask("Default", "Platform")
             );
 

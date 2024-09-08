@@ -4,8 +4,8 @@ namespace Game.Levels
 {
     public sealed class LevelStats
     {
-        public event Action Won;
-        public event Action Lost;
+        public event Action Win;
+        public event Action Lose;
 
         private int _score = 0;
         public int Score
@@ -33,7 +33,7 @@ namespace Game.Levels
                 _hp = value;
                 if (_hp <= 0)
                 {
-                    Lost?.Invoke();
+                    Lose?.Invoke();
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace Game.Levels
                 _enemiesNumber = value;
                 if (_enemiesNumber <= 0)
                 {
-                    Won?.Invoke();
+                    Win?.Invoke();
                 }
             }
         }
