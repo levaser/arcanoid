@@ -8,54 +8,77 @@ namespace Game.Levels
 {
     public sealed class PageSwitcher : IStartable, IDisposable
     {
+        private readonly LevelStats _levelStats;
+        private readonly LevelInput _levelInput;
         private readonly GameObject _winPage;
         private readonly GameObject _losePage;
-        private readonly LevelStats _levelStats;
-        private readonly Controls _controls;
+        private readonly GameObject _pausePage;
 
         [Inject]
         public PageSwitcher(
             LevelStats levelStats,
-            Controls controls,
+            LevelInput levelInput,
             GameObject winPage,
-            GameObject losePage
+            GameObject losePage,
+            GameObject pausePage
         )
         {
             _levelStats = levelStats;
-            _controls = controls;
+            _levelInput = levelInput;
             _winPage = winPage;
             _losePage = losePage;
+            _pausePage = pausePage;
         }
 
-        public void Start()
+        void IStartable.Start()
         {
             _levelStats.Win += OnWin;
             _levelStats.Lose += OnLose;
+            _levelInput.EscapePerformed += OnPause;
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             _levelStats.Win -= OnWin;
             _levelStats.Lose -= OnLose;
+            _levelInput.EscapePerformed -= OnPause;
         }
 
         private void OnWin()
         {
-            ShowCursor();
-            _controls.Level.Disable();
+            SwitchInput();
             _winPage.SetActive(true);
         }
         private void OnLose()
         {
-            ShowCursor();
-            _controls.Level.Disable();
+            SwitchInput();
             _losePage.SetActive(true);
         }
 
-        private void ShowCursor()
+        private void OnPause()
+        {
+            SwitchInput();
+            Time.timeScale = 0;
+            _pausePage.SetActive(true);
+        }
+
+        public void OnUnpause()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            _levelInput.SetActiveLevelInput(true);
+            _pausePage.SetActive(false);
+
+            Time.timeScale = 1;
+        }
+
+        private void SwitchInput()
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            _levelInput.SetActiveLevelInput(false);
         }
     }
 }

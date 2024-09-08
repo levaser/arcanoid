@@ -3,21 +3,21 @@ using UnityEngine.UI;
 using VContainer;
 using VContainer.Unity;
 
-namespace Game.FinalMenues
+namespace Game.Levels
 {
-    public sealed class ToCampaignButton : IStartable, IDisposable
+    public sealed class ResumeButton : IStartable, IDisposable
     {
         private readonly Button _button;
-        private readonly GameStarter _gameStarter;
+        private readonly PageSwitcher _pageSwitcher;
 
         [Inject]
-        public ToCampaignButton(
+        public ResumeButton(
             Button button,
-            GameStarter gameStarter
+            PageSwitcher pageSwitcher
         )
         {
             _button = button;
-            _gameStarter = gameStarter;
+            _pageSwitcher = pageSwitcher;
         }
 
         void IStartable.Start()
@@ -32,7 +32,7 @@ namespace Game.FinalMenues
 
         private void OnButtonClicked()
         {
-            _gameStarter.LoadCampaignMap();
+            _pageSwitcher.OnUnpause();
         }
     }
 }

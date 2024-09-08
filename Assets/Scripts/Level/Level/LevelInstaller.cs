@@ -36,9 +36,11 @@ namespace Game.Levels
         [Header("Pages")]
         [SerializeField] private GameObject _winPage;
         [SerializeField] private GameObject _losePage;
+        [SerializeField] private GameObject _pausePage;
         [SerializeField] private Button[] _toCampaignButtons;
         [SerializeField] private Button _nextLevelButton;
         [SerializeField] private Button _restartLevelButton;
+        [SerializeField] private Button _unpauseButton;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -99,7 +101,9 @@ namespace Game.Levels
         {
             builder.RegisterEntryPoint<PageSwitcher>(Lifetime.Scoped)
                 .WithParameter("winPage", _winPage)
-                .WithParameter("losePage", _losePage);
+                .WithParameter("losePage", _losePage)
+                .WithParameter("pausePage", _pausePage)
+                .AsSelf();
 
             foreach (var e in _toCampaignButtons)
                 builder.RegisterEntryPoint<ToCampaignButton>(Lifetime.Scoped)
@@ -110,6 +114,9 @@ namespace Game.Levels
 
             builder.RegisterEntryPoint<RestartLevelButton>(Lifetime.Scoped)
                 .WithParameter(_restartLevelButton);
+
+            builder.RegisterEntryPoint<ResumeButton>(Lifetime.Scoped)
+                .WithParameter(_unpauseButton);
         }
     }
 }
