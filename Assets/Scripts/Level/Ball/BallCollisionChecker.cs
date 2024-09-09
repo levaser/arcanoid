@@ -34,7 +34,7 @@ namespace Game.Levels
                 _config.Radius / 2,
                 velocity,
                 Hits,
-                velocity.magnitude * Time.fixedDeltaTime + 0.01f,
+                velocity.magnitude * Time.fixedDeltaTime + 0.02f,
                 LayerMask.GetMask("Default", "Platform")
             );
 
