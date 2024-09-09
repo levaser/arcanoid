@@ -65,7 +65,7 @@ namespace Game.Levels
 
         public void OnUnpause()
         {
-            _gameModeSwitcher.SetMenuMode();
+            _gameModeSwitcher.SetPlayMode();
             _pausePage.SetActive(false);
         }
     }

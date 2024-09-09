@@ -3580,7 +3580,9 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _enemyGridTransform: {fileID: 1605036871}
-  _enemyPrefab: {fileID: 2577585254963922480, guid: fad8433cdd76b944cb719b74d39dca1e,
+  _defaultEnemyPrefab: {fileID: 2577585254963922480, guid: fad8433cdd76b944cb719b74d39dca1e,
+    type: 3}
+  _forcedEnemyPrefab: {fileID: 2577585254963922480, guid: 7e61b43c7b8caef42a0e48a841d71a38,
     type: 3}
   _ballConfig: {fileID: 11400000, guid: bf4078640e3e5e049bc5214185b4fbad, type: 2}
   _ballTransform: {fileID: 7227516331127412328}

@@ -8,14 +8,16 @@ namespace Game.Levels
     {
         private readonly LevelConfig _levelConfig;
         private readonly Transform _gridTransform;
-        private readonly GameObject _enemyPrefab;
+        private readonly GameObject _defaultEnemyPrefab;
+        private readonly GameObject _forcedEnemyPrefab;
         private readonly LevelStats _levelStats;
 
         [Inject]
         public LevelLoader(
             LevelStarter levelStarter,
             Transform gridTransform,
-            GameObject enemyPrefab,
+            GameObject defaultEnemyPrefab,
+            GameObject forcedEnemyPrefab,
             LevelStats levelStats
         )
         {
@@ -28,13 +30,19 @@ namespace Game.Levels
             _gridTransform = gridTransform
                 ?? throw new System.ArgumentNullException(nameof(gridTransform), "Parameter 'gridTransform' cannot be null");
 
-            _enemyPrefab = enemyPrefab
-                ?? throw new System.ArgumentNullException(nameof(enemyPrefab), "Parameter 'enemyPrefab' cannot be null");
+            _defaultEnemyPrefab = defaultEnemyPrefab
+                ?? throw new System.ArgumentNullException(nameof(defaultEnemyPrefab), "Parameter 'enemyPrefab' cannot be null");
+            _forcedEnemyPrefab = forcedEnemyPrefab;
 
             _levelStats = levelStats;
         }
 
         void IStartable.Start()
+        {
+            BuildLevel();
+        }
+
+        private void BuildLevel()
         {
             for (int row = 0; row < _levelConfig.Grid.GridSize.y; row++)
             {
@@ -42,7 +50,12 @@ namespace Game.Levels
                 {
                     if (_levelConfig.Grid.GetCell(column, row) == true)
                     {
-                        GameObject enemy = Object.Instantiate(_enemyPrefab, new Vector3(column, -row * 0.75f, 0) + _gridTransform.localPosition, Quaternion.identity, _gridTransform);
+                        GameObject enemy = Object.Instantiate(
+                            Random.Range(0, 10) == 0 ? _forcedEnemyPrefab : _defaultEnemyPrefab,
+                            new Vector3(column, -row * 0.75f, 0) + _gridTransform.localPosition,
+                            Quaternion.identity,
+                            _gridTransform
+                        );
                         enemy.GetComponent<SpriteRenderer>().sortingOrder = row;
                         _levelStats.EnemiesNumber++;
                     }

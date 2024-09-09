@@ -11,7 +11,8 @@ namespace Game.Levels
     {
         [Header("Enemy")]
         [SerializeField] private Transform _enemyGridTransform;
-        [SerializeField] private GameObject _enemyPrefab;
+        [SerializeField] private GameObject _defaultEnemyPrefab;
+        [SerializeField] private GameObject _forcedEnemyPrefab;
 
 
         [Header("Ball")]
@@ -47,7 +48,8 @@ namespace Game.Levels
             builder.Register<LevelStats>(Lifetime.Scoped);
             builder.RegisterEntryPoint<LevelLoader>(Lifetime.Scoped)
                 .WithParameter(_enemyGridTransform)
-                .WithParameter(_enemyPrefab);
+                .WithParameter("defaultEnemyPrefab", _defaultEnemyPrefab)
+                .WithParameter("forcedEnemyPrefab", _forcedEnemyPrefab);
 
             builder.RegisterEntryPoint<LevelInput>(Lifetime.Scoped).AsSelf();
             builder.RegisterEntryPoint<GameModeSwitcher>(Lifetime.Scoped).AsSelf();
