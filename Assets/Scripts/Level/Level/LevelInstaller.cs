@@ -48,9 +48,9 @@ namespace Game.Levels
             builder.RegisterEntryPoint<LevelLoader>(Lifetime.Scoped)
                 .WithParameter(_enemyGridTransform)
                 .WithParameter(_enemyPrefab);
-            // builder.RegisterEntryPoint<LevelFinisher>(Lifetime.Scoped);
 
             builder.RegisterEntryPoint<LevelInput>(Lifetime.Scoped).AsSelf();
+            builder.RegisterEntryPoint<GameModeSwitcher>(Lifetime.Scoped).AsSelf();
 
             ConfigurePlatform(builder);
             ConfigureBall(builder);

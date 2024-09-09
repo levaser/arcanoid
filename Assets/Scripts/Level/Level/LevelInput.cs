@@ -42,12 +42,6 @@ namespace Game.Levels
             _controls.Level.Escape.performed -= OnEscape;
         }
 
-        public void SetActiveLevelInput(bool isActive)
-        {
-            if (isActive) _controls.Level.Enable();
-            else _controls.Level.Disable();
-        }
-
         private void OnStandardInteraction(InputAction.CallbackContext context) => LevelStartPerformed?.Invoke();
 
         private void OnMove(InputAction.CallbackContext context) => PlatformMovePerformed?.Invoke(context.ReadValue<Vector2>().x * MouseInputMultiplier);

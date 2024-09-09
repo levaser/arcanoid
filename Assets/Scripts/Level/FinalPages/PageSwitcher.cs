@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -10,6 +9,7 @@ namespace Game.Levels
     {
         private readonly LevelStats _levelStats;
         private readonly LevelInput _levelInput;
+        private readonly GameModeSwitcher _gameModeSwitcher;
         private readonly GameObject _winPage;
         private readonly GameObject _losePage;
         private readonly GameObject _pausePage;
@@ -18,6 +18,7 @@ namespace Game.Levels
         public PageSwitcher(
             LevelStats levelStats,
             LevelInput levelInput,
+            GameModeSwitcher gameModeSwitcher,
             GameObject winPage,
             GameObject losePage,
             GameObject pausePage
@@ -25,6 +26,7 @@ namespace Game.Levels
         {
             _levelStats = levelStats;
             _levelInput = levelInput;
+            _gameModeSwitcher = gameModeSwitcher;
             _winPage = winPage;
             _losePage = losePage;
             _pausePage = pausePage;
@@ -46,39 +48,25 @@ namespace Game.Levels
 
         private void OnWin()
         {
-            SwitchInput();
+            _gameModeSwitcher.SetMenuMode();
             _winPage.SetActive(true);
         }
         private void OnLose()
         {
-            SwitchInput();
+            _gameModeSwitcher.SetMenuMode();
             _losePage.SetActive(true);
         }
 
         private void OnPause()
         {
-            SwitchInput();
-            Time.timeScale = 0;
+            _gameModeSwitcher.SetMenuMode();
             _pausePage.SetActive(true);
         }
 
         public void OnUnpause()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-
-            _levelInput.SetActiveLevelInput(true);
+            _gameModeSwitcher.SetMenuMode();
             _pausePage.SetActive(false);
-
-            Time.timeScale = 1;
-        }
-
-        private void SwitchInput()
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-
-            _levelInput.SetActiveLevelInput(false);
         }
     }
 }
