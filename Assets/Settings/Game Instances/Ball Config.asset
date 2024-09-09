@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 246e83dbe3d1f5f48acc4e2991202348, type: 3}
   m_Name: Ball Config
   m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 3
-  <MaxSpeed>k__BackingField: 8
+  <Speed>k__BackingField: 6
+  <MaxSpeed>k__BackingField: 14
   <Radius>k__BackingField: 0.42

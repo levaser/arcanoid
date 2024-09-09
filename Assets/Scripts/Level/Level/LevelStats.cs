@@ -4,24 +4,41 @@ namespace Game.Levels
 {
     public sealed class LevelStats
     {
-        public event Action Won;
-        public event Action Lost;
+        public event Action Win;
+        public event Action Lose;
 
-        public int Score = 0;
+        private int _score = 0;
+        public int Score
+        {
+            get => _score;
+            set
+            {
+                ScoreChanged?.Invoke(value);
+                _score = value;
+            }
+        }
+        public event Action<int> ScoreChanged;
 
-        private int _hp = 1;
+        private int _hp = 3;
         public int HP
         {
             get => _hp;
             set
             {
+                if (_hp > value)
+                    HPDecreased?.Invoke();
+                else
+                    HPIncreased?.Invoke();
+
                 _hp = value;
                 if (_hp <= 0)
                 {
-                    Lost?.Invoke();
+                    Lose?.Invoke();
                 }
             }
         }
+        public event Action HPDecreased;
+        public event Action HPIncreased;
 
         private int _enemiesNumber = 0;
         public int EnemiesNumber
@@ -32,7 +49,7 @@ namespace Game.Levels
                 _enemiesNumber = value;
                 if (_enemiesNumber <= 0)
                 {
-                    Won?.Invoke();
+                    Win?.Invoke();
                 }
             }
         }

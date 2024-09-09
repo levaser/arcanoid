@@ -13,6 +13,8 @@ namespace Game.Levels
         private readonly PlatformConfig _config;
         private readonly LevelInput _input;
 
+        public Vector3 PlatformPosition => _transform.position;
+
         [Inject]
         public PlatformMover(
             Transform transform,

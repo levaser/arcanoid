@@ -2,11 +2,13 @@ using UnityEngine;
 
 namespace Game.Levels
 {
-    public sealed class Enemy : MarkerClass, IEnemyReflectable
+    public abstract class Enemy : MarkerClass, IReflectable
     {
-        public void OnTouch()
+        public Vector2 GetReflectedDirection(Vector2 direction, RaycastHit2D hit)
         {
-            Destroy(transform.gameObject);
+            return Vector2.Reflect(direction, hit.normal);
         }
+
+        public abstract void OnContactPerformed(LevelStats levelStats);
     }
 }

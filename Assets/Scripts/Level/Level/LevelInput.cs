@@ -10,6 +10,7 @@ namespace Game.Levels
     {
         public event Action LevelStartPerformed;
         public event Action<float> PlatformMovePerformed;
+        public event Action EscapePerformed;
 
         private const float MouseInputMultiplier = 0.05f;
 
@@ -29,6 +30,7 @@ namespace Game.Levels
 
             _controls.Level.StandardInteraction.performed += OnStandardInteraction;
             _controls.Level.Move.performed += OnMove;
+            _controls.Level.Escape.performed += OnEscape;
         }
 
         void IDisposable.Dispose()
@@ -37,10 +39,13 @@ namespace Game.Levels
 
             _controls.Level.StandardInteraction.performed -= OnStandardInteraction;
             _controls.Level.Move.performed -= OnMove;
+            _controls.Level.Escape.performed -= OnEscape;
         }
 
         private void OnStandardInteraction(InputAction.CallbackContext context) => LevelStartPerformed?.Invoke();
 
         private void OnMove(InputAction.CallbackContext context) => PlatformMovePerformed?.Invoke(context.ReadValue<Vector2>().x * MouseInputMultiplier);
+
+        private void OnEscape(InputAction.CallbackContext context) => EscapePerformed?.Invoke();
     }
 }

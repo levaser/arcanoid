@@ -18,14 +18,14 @@ namespace Game.Levels
 
         void IStartable.Start()
         {
-            _levelStats.Won += OnWon;
-            _levelStats.Lost += OnLost;
+            _levelStats.Win += OnWon;
+            _levelStats.Lose += OnLost;
         }
 
         void IDisposable.Dispose()
         {
-            _levelStats.Won -= OnWon;
-            _levelStats.Lost -= OnLost;
+            _levelStats.Win -= OnWon;
+            _levelStats.Lose -= OnLost;
         }
 
         public void OnWon()

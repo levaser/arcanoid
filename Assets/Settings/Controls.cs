@@ -50,6 +50,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""5206b3cf-312c-40bd-87ba-08d2f68411f0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -74,6 +83,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""88ca49d8-f536-4d39-95bd-012ebbe62ec2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -86,6 +106,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Level = asset.FindActionMap("Level", throwIfNotFound: true);
         m_Level_StandardInteraction = m_Level.FindAction("StandardInteraction", throwIfNotFound: true);
         m_Level_Move = m_Level.FindAction("Move", throwIfNotFound: true);
+        m_Level_Escape = m_Level.FindAction("Escape", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -187,12 +208,14 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<ILevelActions> m_LevelActionsCallbackInterfaces = new List<ILevelActions>();
     private readonly InputAction m_Level_StandardInteraction;
     private readonly InputAction m_Level_Move;
+    private readonly InputAction m_Level_Escape;
     public struct LevelActions
     {
         private @Controls m_Wrapper;
         public LevelActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @StandardInteraction => m_Wrapper.m_Level_StandardInteraction;
         public InputAction @Move => m_Wrapper.m_Level_Move;
+        public InputAction @Escape => m_Wrapper.m_Level_Escape;
         public InputActionMap Get() { return m_Wrapper.m_Level; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -208,6 +231,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @Escape.started += instance.OnEscape;
+            @Escape.performed += instance.OnEscape;
+            @Escape.canceled += instance.OnEscape;
         }
 
         private void UnregisterCallbacks(ILevelActions instance)
@@ -218,6 +244,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @Escape.started -= instance.OnEscape;
+            @Escape.performed -= instance.OnEscape;
+            @Escape.canceled -= instance.OnEscape;
         }
 
         public void RemoveCallbacks(ILevelActions instance)
@@ -242,5 +271,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnStandardInteraction(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
     }
 }

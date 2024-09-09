@@ -13,11 +13,18 @@ namespace Game.MainMenu
         [SerializeField]
         private Button _finishButton;
 
+        // [SerializeField]
+        // private MenuAmbientPlayer _menuAmbientPlayer;
+
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<InputController>(Lifetime.Scoped);
-            builder.RegisterEntryPoint<StartGameButton>(Lifetime.Scoped).WithParameter(_startButton);
-            builder.RegisterEntryPoint<FinishApplicationButton>(Lifetime.Scoped).WithParameter(_finishButton);
+            builder.RegisterEntryPoint<StartGameButton>(Lifetime.Scoped)
+                .WithParameter(_startButton);
+            builder.RegisterEntryPoint<FinishApplicationButton>(Lifetime.Scoped)
+                .WithParameter(_finishButton);
+            // builder.RegisterEntryPoint<MenuAmbientManager>(Lifetime.Singleton)
+            //     .WithParameter(_menuAmbientPlayer);
         }
     }
 }

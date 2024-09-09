@@ -14,10 +14,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level.unity
     guid: 21b6b778ea5c8aa43bd19c7043bf6c59
-  - enabled: 1
-    path: Assets/Scenes/WinMenu.unity
-    guid: 3bdef1281808ac848b46a5ebace27a3e
-  - enabled: 1
-    path: Assets/Scenes/LoseMenu.unity
-    guid: b26b23c9c11445948870669184efc35a
   m_configObjects: {}

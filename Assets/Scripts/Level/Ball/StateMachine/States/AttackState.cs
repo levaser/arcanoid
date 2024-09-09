@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Utility.StateSystem;
 using VContainer;
 
@@ -13,6 +11,7 @@ namespace Game.Levels
         private readonly BallCollisionChecker _collisionChecker;
         private readonly Rigidbody2D _rigidbody;
         private readonly LevelStats _levelStats;
+        private readonly AudioSource _audioSource;
 
         private Vector2 _moveDirection;
         private float _speed;
@@ -23,13 +22,15 @@ namespace Game.Levels
             LevelInput input,
             Transform ballTransform,
             BallConfig config,
-            LevelStats levelStats
+            LevelStats levelStats,
+            AudioSource audioSource
         ) : base(stateMachine, input, ballTransform)
         {
             _config = config;
             _collisionChecker = new BallCollisionChecker(BallTransform, _config);
             _rigidbody = BallTransform.GetComponent<Rigidbody2D>();
             _levelStats = levelStats;
+            _audioSource = audioSource;
         }
 
         protected override void OnEnter()
@@ -39,39 +40,32 @@ namespace Game.Levels
             _rigidbody.velocity = _moveDirection * _speed;
 
             _collisionChecker.CollisionDetected += OnCollisionDetected;
+            _levelStats.HPDecreased += OnHPDecreased;
+            _levelStats.Win += OnFinish;
+            _levelStats.Win += OnFinish;
         }
 
         protected override void OnExit()
         {
             _collisionChecker.CollisionDetected -= OnCollisionDetected;
+            _levelStats.HPDecreased -= OnHPDecreased;
+            _levelStats.Win -= OnFinish;
+            _levelStats.Win -= OnFinish;
         }
 
         public override void Update()
         {
-            _collisionChecker.CheckCollisionsInDirection(_moveDirection);
+            _collisionChecker.CheckCollisionsInDirection(_moveDirection * _speed);
         }
 
-        private void OnCollisionDetected(RaycastHit2D hit)
+        private void OnCollisionDetected()
         {
-            MarkerClass target = hit.transform.GetComponent<MarkerClass>();
-            List<Type> typeInterfaces = new List<Type>(hit.transform.GetComponent<MarkerClass>().GetType().GetInterfaces());
-            if (typeInterfaces.Find(e => e == typeof(IEnemyReflectable)) != null)
+            MarkerClass target = _collisionChecker.Hits[_collisionChecker.HitsNumber - 1].transform.GetComponent<MarkerClass>();
+            if (target is IReflectable reflectable)
             {
-                ChangeMoveDirection(Vector2.Reflect(_moveDirection, hit.normal));
-                (target as IEnemyReflectable).OnTouch();
-                _levelStats.EnemiesNumber--;
-            }
-            else if (typeInterfaces.Find(e => e == typeof(ICustomRelfectable)) != null)
-            {
-                ChangeMoveDirection((hit.transform.GetComponent<MarkerClass>() as ICustomRelfectable).GetReflectedDirection(hit));
-            }
-            else if (typeInterfaces.Find(e => e == typeof(IDefaultReflectable)) != null)
-            {
-                ChangeMoveDirection(Vector2.Reflect(_moveDirection, hit.normal));
-            }
-            else if (typeInterfaces.Find(e => e == typeof(IDeadReflectable)) != null)
-            {
-                _levelStats.HP--;
+                ChangeMoveDirection(reflectable.GetReflectedDirection(_moveDirection, _collisionChecker.Hits[_collisionChecker.HitsNumber - 1]));
+                reflectable.OnContactPerformed(_levelStats);
+                _audioSource.Play();
             }
         }
 
@@ -81,6 +75,16 @@ namespace Game.Levels
             _speed = Mathf.Clamp(_speed + 0.05f, 0f, _config.MaxSpeed);
 
             _rigidbody.velocity = _moveDirection * _speed;
+        }
+
+        private void OnHPDecreased()
+        {
+            StateMachine.SetState<OnPlatformState>();
+        }
+
+        private void OnFinish()
+        {
+            StateMachine.SetState<OnPlatformState>();
         }
     }
 }
