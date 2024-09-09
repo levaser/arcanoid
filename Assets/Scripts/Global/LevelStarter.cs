@@ -6,6 +6,8 @@ namespace Game
 {
     public sealed class LevelStarter
     {
+        public event Action LevelStarted;
+
         public readonly LevelConfig[] Levels;
 
         public int CurrentLevelNumber { get; private set; }

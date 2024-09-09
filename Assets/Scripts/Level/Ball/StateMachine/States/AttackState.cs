@@ -11,6 +11,7 @@ namespace Game.Levels
         private readonly BallCollisionChecker _collisionChecker;
         private readonly Rigidbody2D _rigidbody;
         private readonly LevelStats _levelStats;
+        private readonly AudioSource _audioSource;
 
         private Vector2 _moveDirection;
         private float _speed;
@@ -21,13 +22,15 @@ namespace Game.Levels
             LevelInput input,
             Transform ballTransform,
             BallConfig config,
-            LevelStats levelStats
+            LevelStats levelStats,
+            AudioSource audioSource
         ) : base(stateMachine, input, ballTransform)
         {
             _config = config;
             _collisionChecker = new BallCollisionChecker(BallTransform, _config);
             _rigidbody = BallTransform.GetComponent<Rigidbody2D>();
             _levelStats = levelStats;
+            _audioSource = audioSource;
         }
 
         protected override void OnEnter()
@@ -62,6 +65,7 @@ namespace Game.Levels
             {
                 ChangeMoveDirection(reflectable.GetReflectedDirection(_moveDirection, _collisionChecker.Hits[_collisionChecker.HitsNumber - 1]));
                 reflectable.OnContactPerformed(_levelStats);
+                _audioSource.Play();
             }
         }
 

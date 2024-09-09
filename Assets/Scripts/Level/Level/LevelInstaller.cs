@@ -18,6 +18,7 @@ namespace Game.Levels
         [Header("Ball")]
         [SerializeField] private BallConfig _ballConfig;
         [SerializeField] private Transform _ballTransform;
+        [SerializeField] private AudioSource _collisionAudioSource;
 
 
         [Header("Platform")]
@@ -42,6 +43,8 @@ namespace Game.Levels
         [SerializeField] private Button _nextLevelButton;
         [SerializeField] private Button _restartLevelButton;
         [SerializeField] private Button _unpauseButton;
+        [SerializeField] private AudioSource _winAudio;
+        [SerializeField] private AudioSource _loseAudio;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -70,7 +73,8 @@ namespace Game.Levels
                 .WithParameter("platformTransform", _platformTransform);
             builder.Register<BallState, AttackState>(Lifetime.Scoped)
                 .WithParameter(_ballTransform)
-                .WithParameter(_ballConfig);
+                .WithParameter(_ballConfig)
+                .WithParameter(_collisionAudioSource);
 
             builder.RegisterEntryPoint<BallStateMachine>(Lifetime.Scoped)
                 .As<Utility.StateSystem.IStateMachine, BallStateMachine>();
@@ -105,6 +109,8 @@ namespace Game.Levels
                 .WithParameter("winPage", _winPage)
                 .WithParameter("losePage", _losePage)
                 .WithParameter("pausePage", _pausePage)
+                .WithParameter("winAudio", _winAudio)
+                .WithParameter("loseAudio", _loseAudio)
                 .AsSelf();
 
             foreach (var e in _toCampaignButtons)

@@ -13,6 +13,8 @@ namespace Game.Levels
         private readonly GameObject _winPage;
         private readonly GameObject _losePage;
         private readonly GameObject _pausePage;
+        private readonly AudioSource _winAudio;
+        private readonly AudioSource _loseAudio;
 
         [Inject]
         public PageSwitcher(
@@ -21,7 +23,9 @@ namespace Game.Levels
             GameModeSwitcher gameModeSwitcher,
             GameObject winPage,
             GameObject losePage,
-            GameObject pausePage
+            GameObject pausePage,
+            AudioSource winAudio,
+            AudioSource loseAudio
         )
         {
             _levelStats = levelStats;
@@ -30,6 +34,8 @@ namespace Game.Levels
             _winPage = winPage;
             _losePage = losePage;
             _pausePage = pausePage;
+            _winAudio = winAudio;
+            _loseAudio = loseAudio;
         }
 
         void IStartable.Start()
@@ -50,11 +56,13 @@ namespace Game.Levels
         {
             _gameModeSwitcher.SetMenuMode();
             _winPage.SetActive(true);
+            _winAudio.Play();
         }
         private void OnLose()
         {
             _gameModeSwitcher.SetMenuMode();
             _losePage.SetActive(true);
+            _loseAudio.Play();
         }
 
         private void OnPause()
