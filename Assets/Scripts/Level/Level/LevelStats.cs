@@ -19,7 +19,7 @@ namespace Game.Levels
         }
         public event Action<int> ScoreChanged;
 
-        private int _hp = 1;
+        private int _hp = 3;
         public int HP
         {
             get => _hp;

@@ -6,12 +6,14 @@ namespace Game.Levels
 {
     public sealed class BallCollisionChecker
     {
-        public event Action<RaycastHit2D> CollisionDetected;
+        public event Action CollisionDetected;
 
         private readonly Transform _transform;
         private readonly BallConfig _config;
 
         private RaycastHit2D _hit;
+        public RaycastHit2D[] Hits { get; private set; }
+        public int HitsNumber { get; private set; }
 
         [Inject]
         public BallCollisionChecker(
@@ -21,20 +23,23 @@ namespace Game.Levels
         {
             _transform = transform;
             _config = config;
+
+            Hits = new RaycastHit2D[10];
         }
 
         public void CheckCollisionsInDirection(Vector2 velocity)
         {
-            _hit = Physics2D.CircleCast(
+            HitsNumber = Physics2D.CircleCastNonAlloc(
                 _transform.position + new Vector3(0f, _config.Radius / 2, 0f),
                 _config.Radius / 2,
                 velocity,
+                Hits,
                 velocity.magnitude * Time.fixedDeltaTime + 0.01f,
                 LayerMask.GetMask("Default", "Platform")
             );
 
-            if (_hit.collider != null)
-                CollisionDetected?.Invoke(_hit);
+            if (HitsNumber > 0)
+                CollisionDetected?.Invoke();
         }
     }
 }

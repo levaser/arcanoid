@@ -55,12 +55,12 @@ namespace Game.Levels
             _collisionChecker.CheckCollisionsInDirection(_moveDirection * _speed);
         }
 
-        private void OnCollisionDetected(RaycastHit2D hit)
+        private void OnCollisionDetected()
         {
-            MarkerClass target = hit.transform.GetComponent<MarkerClass>();
+            MarkerClass target = _collisionChecker.Hits[_collisionChecker.HitsNumber - 1].transform.GetComponent<MarkerClass>();
             if (target is IReflectable reflectable)
             {
-                ChangeMoveDirection(reflectable.GetReflectedDirection(_moveDirection, hit));
+                ChangeMoveDirection(reflectable.GetReflectedDirection(_moveDirection, _collisionChecker.Hits[_collisionChecker.HitsNumber - 1]));
                 reflectable.OnContactPerformed(_levelStats);
             }
         }
